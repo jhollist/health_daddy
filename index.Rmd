@@ -1,28 +1,25 @@
 ---
-title: "Untitled"
-output: html_document
+title: "Jeff's Health Log"
+output: 
+  html_document:
+    toc: true
+    number_sections: true
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## 2021-11-22
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+- Fast:
+- Food:
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## 2021-11-21
 
-```{r cars}
-summary(cars)
-```
+- Fast: 9:30 PM to 11:50 AM ~ 14 hours
+- Food
+  - 11:50 AM Snack - Hot Cider and Cider Doughnut
+  - 1:20 PM Lunch - Cucumber, carrot, sweet potato crackers, Italian bread pizza
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
