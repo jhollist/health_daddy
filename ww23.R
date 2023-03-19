@@ -1,10 +1,28 @@
+# RGoogleFit
+# https://github.com/mathesong/rwithings
+# 
+
+
 library(googlesheets4)
 library(dplyr)
 library(ggplot2)
 library(lubridate)
 library(zoo)
+library(stringr)
+options(pillar.sigfig = 4)
+gs4_deauth()
+ww_weight <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1PGO2ewReghbTrlLISGDMR9AwzjDVWxVlBjNzqaVHQXk/edit?usp=sharing")
+withings_weight <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1ZlWmFnrWuTt-vk3goHy8oFvH41AvarqAztojHoEHdBA/edit?usp=sharing",
+                                             col_names = FALSE) |>
+  select(date = 1, weight = 2) |>
+  mutate(date = str_replace(date, "Date: ", "")) |>
+  mutate(date = str_replace(date, " at*M", ""))
+str_replace(" at 07:00AM", "\\sat\\s[:alnum:]+", "")
 
-www <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1PGO2ewReghbTrlLISGDMR9AwzjDVWxVlBjNzqaVHQXk/edit?usp=sharing")
+View(withings_weight)
+
+
+
 www <- www |>
   mutate(rollmax = rollmax(weight, 7, fill = NA, na.rm = TRUE),
          rollmean = rollmean(weight, 7, fill = NA, na.rm = TRUE),
