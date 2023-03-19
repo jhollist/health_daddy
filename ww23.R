@@ -21,11 +21,6 @@ withings_weight <- googlesheets4::read_sheet("https://docs.google.com/spreadshee
 View(withings_weight)
 www <- bind_rows(ww_weight, withings_weight)
 
-
-
-
-
-
 www <- www |>
   arrange(date) |>
   mutate(rollmax = rollmax(weight, 6, fill = NA, na.rm = TRUE),
@@ -45,6 +40,7 @@ www |>
   summarize(max_weight = max(weight, na.rm = TRUE),
             mean_weight = mean(weight, na.rm = TRUE),
             min_weight = min(weight, na.rm = TRUE)) |>
-  ungroup() #|>
+  ungroup() |>
+  View()
 #ggplot(aes(week, min_weight)) +
 #geom_point()
