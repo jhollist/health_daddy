@@ -1,6 +1,6 @@
 # RGoogleFit
 # https://github.com/mathesong/rwithings
-# 
+#
 
 
 library(googlesheets4)
@@ -16,30 +16,32 @@ withings_weight <- googlesheets4::read_sheet("https://docs.google.com/spreadshee
                                              col_names = FALSE) |>
   select(date = 1, weight = 2) |>
   mutate(date = str_replace(date, "Date: ", "")) |>
-  mutate(date = str_replace(date, " at*M", ""))
-
+  mutate(date = lubridate::mdy_hm(date)) |>
+  mutate(weight = as.numeric(str_extract(weight, "[0-9]+.[0-9]+")))
 
 View(withings_weight)
-
-
+www <- bind_rows(ww_weight, withings_weight)
 
 www <- www |>
-  mutate(rollmax = rollmax(weight, 7, fill = NA, na.rm = TRUE),
-         rollmean = rollmean(weight, 7, fill = NA, na.rm = TRUE),
-         rollmin = rollapply(weight, 7, min, fill = NA, na.rm = TRUE),
+  arrange(date) |>
+  mutate(rollmax = rollmax(weight, 6, fill = NA, na.rm = TRUE),
+         rollmean = rollmean(weight, 6, fill = NA, na.rm = TRUE),
+         rollmin = rollapply(weight, 6, min, fill = NA, na.rm = TRUE),
          month = month(date),
          week = week(date),
          year = year(date))
+#View(www)
 ggplot(www, aes(x = date, y = weight)) +
   geom_point(alpha = 0.4) +
   #geom_line(data = www, aes(x = date, y = rollmax), color = "grey50") +
-  geom_line(data = www, aes(x = date, y = rollmean), color = "red") 
+  geom_line(data = www, aes(x = date, y = rollmean), color = "red")
 #geom_line(data = www, aes(x = date, y = rollmin), color = "grey50")
 www |>
   group_by(year, week) |>
   summarize(max_weight = max(weight, na.rm = TRUE),
             mean_weight = mean(weight, na.rm = TRUE),
             min_weight = min(weight, na.rm = TRUE)) |>
-  ungroup() #|>
+  ungroup() |>
+  View()
 #ggplot(aes(week, min_weight)) +
 #geom_point()
