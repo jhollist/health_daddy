@@ -34,14 +34,25 @@ www <- www |>
 ggplot(www, aes(x = date, y = weight)) +
   geom_point(alpha = 0.4) +
   #geom_line(data = www, aes(x = date, y = rollmax), color = "grey50") +
-  geom_line(data = www, aes(x = date, y = rollmean), color = "red")
+  geom_line(data = www, aes(x = date, y = rollmean), color = "red") +
+  geom_smooth(method = "loess")
 #geom_line(data = www, aes(x = date, y = rollmin), color = "grey50")
-www |>
+www <- www |>
   group_by(year, week) |>
-  summarize(max_weight = max(weight, na.rm = TRUE),
-            mean_weight = mean(weight, na.rm = TRUE),
-            min_weight = min(weight, na.rm = TRUE)) |>
-  ungroup() |>
-  View()
+  summarize(max_weight = round(max(weight, na.rm = TRUE), 1),
+            mean_weight = round(mean(weight, na.rm = TRUE), 1),
+            min_weight = round(min(weight, na.rm = TRUE), 1)) |>
+  ungroup()
+www <- www |>
+  mutate(max_weight_loss = round(rollapply(max_weight, 2, 
+                                           function(x) x[2] - x[1], fill = NA)
+                                 , 1),
+         mean_weight_loss = round(rollapply(mean_weight, 2, 
+                                           function(x) x[2] - x[1], fill = NA)
+                                 , 1),
+         min_weight_loss = round(rollapply(min_weight, 2, 
+                                           function(x) x[2] - x[1], fill = NA)
+                                 , 1))
+View(www)
 #ggplot(aes(week, min_weight)) +
 #geom_point()
