@@ -9,17 +9,12 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+source("ww23.R")
 ```
 
-## 2021-11-22
-
-- Fast:
-- Food:
-
-## 2021-11-21
-
-- Fast: 9:30 PM to 11:50 AM ~ 14 hours
-- Food
-  - 11:50 AM Snack - Hot Cider and Cider Doughnut
-  - 1:20 PM Lunch - Cucumber, carrot, sweet potato crackers, Italian bread pizza
-
+```{r}
+ggplot(www, aes(x = date, y = weight)) +
+  geom_point(alpha = 0.4) +
+  geom_line(data = www, aes(x = date, y = rollmean), color = "red") +
+  geom_smooth(method = "loess")
+```

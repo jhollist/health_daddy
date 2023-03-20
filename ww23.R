@@ -19,7 +19,7 @@ withings_weight <- googlesheets4::read_sheet("https://docs.google.com/spreadshee
   mutate(date = lubridate::mdy_hm(date)) |>
   mutate(weight = as.numeric(str_extract(weight, "[0-9]+.[0-9]+")))
 
-View(withings_weight)
+#View(withings_weight)
 www <- bind_rows(ww_weight, withings_weight)
 
 www <- www |>
@@ -31,19 +31,19 @@ www <- www |>
          week = week(date),
          year = year(date))
 #View(www)
-ggplot(www, aes(x = date, y = weight)) +
-  geom_point(alpha = 0.4) +
+#ggplot(www, aes(x = date, y = weight)) +
+#  geom_point(alpha = 0.4) +
   #geom_line(data = www, aes(x = date, y = rollmax), color = "grey50") +
-  geom_line(data = www, aes(x = date, y = rollmean), color = "red") +
-  geom_smooth(method = "loess")
+#  geom_line(data = www, aes(x = date, y = rollmean), color = "red") +
+#  geom_smooth(method = "loess")
 #geom_line(data = www, aes(x = date, y = rollmin), color = "grey50")
-www <- www |>
+www2 <- www |>
   group_by(year, week) |>
   summarize(max_weight = round(max(weight, na.rm = TRUE), 1),
             mean_weight = round(mean(weight, na.rm = TRUE), 1),
             min_weight = round(min(weight, na.rm = TRUE), 1)) |>
   ungroup()
-www <- www |>
+www2 <- www2 |>
   mutate(max_weight_loss = round(rollapply(max_weight, 2, 
                                            function(x) x[2] - x[1], fill = NA)
                                  , 1),
@@ -53,6 +53,6 @@ www <- www |>
          min_weight_loss = round(rollapply(min_weight, 2, 
                                            function(x) x[2] - x[1], fill = NA)
                                  , 1))
-View(www)
+#View(www)
 #ggplot(aes(week, min_weight)) +
 #geom_point()
