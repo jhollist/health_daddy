@@ -17,7 +17,7 @@ withings_weight <- googlesheets4::read_sheet("https://docs.google.com/spreadshee
   select(date = 1, weight = 2) |>
   mutate(date = str_replace(date, "Date: ", "")) |>
   mutate(date = str_replace(date, " at*M", ""))
-str_replace(" at 07:00AM", "\\sat\\s[:alnum:]+", "")
+
 
 View(withings_weight)
 
