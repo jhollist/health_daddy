@@ -1,10 +1,6 @@
 ---
 title: "Jeff's Health Log"
-output: 
-  html_document:
-    toc: true
-    number_sections: false
-    toc_float: true
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -18,5 +14,5 @@ ggplot(www, aes(x = date, y = weight)) +
   geom_point(alpha = 0.4) +
   geom_line(data = www, aes(x = date, y = rollmean), color = "red") +
   geom_smooth(method = "loess")
-datatable(www2)
+datatable(www2, options = list(pagelength = 25, lengthMenu = c(25, 50, 75, 100)))
 ```
