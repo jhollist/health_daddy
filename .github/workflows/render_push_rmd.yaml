@@ -4,6 +4,8 @@ name: render index
 on:
   push:
     branches: main
+  schedule:
+    - cron: "30 7 * * *"
 
 jobs:
   render:
