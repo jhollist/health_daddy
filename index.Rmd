@@ -9,7 +9,7 @@ source("ww23.R")
 library(DT)
 ```
 
-```{r date, echo=false}
+```{r date, echo=FALSE}
 lubridate::now()
 ```
 
