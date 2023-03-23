@@ -20,7 +20,7 @@ jobs:
 
     # install packages needed
     - name: install required packages
-      run: Rscript -e 'install.packages(c("rmarkdown","gratia","tidyverse", "zoo", "DT"))'
+      run: Rscript -e 'install.packages(c("rmarkdown","gratia","tidyverse", "zoo", "DT", "lubridate"))'
 
     # Render READEME.md using rmarkdown
     - name: render README
