@@ -9,6 +9,10 @@ source("ww23.R")
 library(DT)
 ```
 
+```{r date, echo=false}
+lubridate::now()
+```
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(www, aes(x = date, y = weight)) +
   geom_point(alpha = 0.4) +
