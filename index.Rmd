@@ -14,9 +14,10 @@ lubridate::now()
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(www, aes(x = date, y = weight)) +
+x <- ggplot(www, aes(x = date, y = weight)) +
   geom_point(alpha = 0.4) +
   geom_line(data = www, aes(x = date, y = rollmean), color = "red") +
   geom_smooth(method = "loess")
+plotly::ggplotly(x)
 datatable(www2, options = list(pagelength = 25, lengthMenu = c(25, 50, 75, 100)))
 ```
