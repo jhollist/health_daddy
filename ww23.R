@@ -21,7 +21,7 @@ withings_weight <- googlesheets4::read_sheet("https://docs.google.com/spreadshee
 
 #View(withings_weight)
 www <- bind_rows(ww_weight, withings_weight)
-
+www <- filter(www, !(weight == 215.7 & date > "2023-03-20"))
 www <- www |>
   arrange(date) |>
   mutate(rollmax = rollmax(weight, 6, fill = NA, na.rm = TRUE),
@@ -44,13 +44,13 @@ www2 <- www |>
             min_weight = round(min(weight, na.rm = TRUE), 1)) |>
   ungroup()
 www2 <- www2 |>
-  mutate(max_weight_loss = round(rollapply(max_weight, 2, 
+  mutate(max_weight_loss = round(rollapply(max_weight, 2,
                                            function(x) x[2] - x[1], fill = NA)
                                  , 1),
-         mean_weight_loss = round(rollapply(mean_weight, 2, 
+         mean_weight_loss = round(rollapply(mean_weight, 2,
                                            function(x) x[2] - x[1], fill = NA)
                                  , 1),
-         min_weight_loss = round(rollapply(min_weight, 2, 
+         min_weight_loss = round(rollapply(min_weight, 2,
                                            function(x) x[2] - x[1], fill = NA)
                                  , 1))
 #View(www)
