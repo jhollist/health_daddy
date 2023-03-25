@@ -10,7 +10,7 @@ library(DT)
 ```
 
 ```{r date, echo=FALSE}
-lubridate::now()
+lubridate::now(tzone = "US/Eastern")
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
