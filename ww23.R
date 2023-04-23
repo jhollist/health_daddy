@@ -44,14 +44,14 @@ www2 <- www |>
             min_weight = round(min(weight, na.rm = TRUE), 1)) |>
   ungroup()
 www2 <- www2 |>
-  mutate(max_weight_loss = round(rollapply(max_weight, 2,
-                                           function(x) x[2] - x[1], fill = NA)
+  mutate(max_weight_loss = round(c(NA,rollapply(max_weight, 2,
+                                           function(x) x[2] - x[1]))
                                  , 1),
-         mean_weight_loss = round(rollapply(mean_weight, 2,
-                                           function(x) x[2] - x[1], fill = NA)
+         mean_weight_loss = round(c(NA,rollapply(mean_weight, 2,
+                                           function(x) x[2] - x[1]))
                                  , 1),
-         min_weight_loss = round(rollapply(min_weight, 2,
-                                           function(x) x[2] - x[1], fill = NA)
+         min_weight_loss = round(c(NA,rollapply(min_weight, 2,
+                                           function(x) x[2] - x[1]))
                                  , 1))
 #View(www)
 #ggplot(aes(week, min_weight)) +
