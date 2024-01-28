@@ -23,10 +23,10 @@ withings_weight <- googlesheets4::read_sheet("https://docs.google.com/spreadshee
 www <- bind_rows(ww_weight, withings_weight)
 www <- filter(www, !(weight == 215.7 & date > "2023-03-20"))
 www <- www |>
-  arrange(date) |>
-  mutate(rollmax = rollmax(weight, 6, fill = NA, na.rm = TRUE),
-         rollmean = rollmean(weight, 6, fill = NA, na.rm = TRUE),
-         rollmin = rollapply(weight, 6, min, fill = NA, na.rm = TRUE),
+  arrange(desc(date)) |>
+  mutate(rollmax = rollmax(weight, 17, fill = NA, na.rm = TRUE),
+         rollmean = rollmean(weight, 17, fill = NA, na.rm = TRUE),
+         rollmin = rollapply(weight, 17, min, fill = NA, na.rm = TRUE),
          month = month(date),
          week = week(date),
          year = year(date))
@@ -52,7 +52,8 @@ www2 <- www2 |>
                                  , 1),
          min_weight_loss = round(c(NA,rollapply(min_weight, 2,
                                            function(x) x[2] - x[1]))
-                                 , 1))
+                                 , 1)) |>
+  arrange(desc(year), desc(week))
 #View(www)
 #ggplot(aes(week, min_weight)) +
 #geom_point()
